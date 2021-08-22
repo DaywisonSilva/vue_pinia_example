@@ -1,17 +1,27 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>nome no state: {{ name }}</h1>
+    <h2>nome no componente: {{ nameUser }}</h2>
+    <input type="text" v-model="nameUser">
+    <button @click="changeName(nameUser)">Mudar nome no state</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import { mapActions, mapState } from 'pinia'
+import { useUserStore } from '@/stores/user.js'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      nameUser: ""
+    }
+  },
+  computed: {
+    ...mapState(useUserStore, ['name']),
+  },
+  methods: {
+    ...mapActions(useUserStore, ['changeName'])
   }
 }
 </script>
